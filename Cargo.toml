@@ -1,0 +1,28 @@
+[package]
+name = "pendulum3d"
+version = "0.1.0"
+edition = "2021"
+default-run = "pendulum3d"
+
+[dependencies]
+bevy = { version = "0.14", default-features = false, features = [
+    "bevy_winit",
+    "bevy_core_pipeline",
+    "bevy_pbr",
+    "bevy_gizmos",
+    "bevy_asset",
+    "bevy_scene",
+    "bevy_render",
+    "multi_threaded",
+    "x11",
+    "png",
+    "tonemapping_luts",
+    "default_font",
+] }
+bevy_panorbit_camera = "0.19"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
