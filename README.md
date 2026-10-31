@@ -1,10 +1,6 @@
 # 3D-Two-Pendulum-Sim
 
-A double pendulum simulated and rendered in 3D with [Bevy](https://bevyengine.org/), where both rods are free to swing out of the plane instead of being confined to 2D. The project has two binaries: an interactive viewer and a headless-ish recorder that exports the simulation straight to an mp4.
-
-![Heart traced by the pendulum's trail](media/heart_1727.png)
-
-That heart shape isn't drawn or scripted — it's the trail traced by bob C's actual trajectory for a particular choice of initial angles (see [Why the trail draws a heart](#why-the-trail-draws-a-heart) below).
+A 3D two-pendulum system solved using Lagrangian mechanics. In the recorded solution, I am outlining a heart with a set of unique initial conditions that give a heart outline.
 
 ## The math
 
@@ -28,15 +24,13 @@ a_c = gravity + (d * lam2) / M2       where d = r_c - r_b
 
 This is solved fresh on every derivative evaluation — the multipliers are never integrated directly, only recomputed from the current state (see `accel()` in `src/physics.rs`).
 
-**Integration**: classic 4th-order Runge-Kutta (`rk4_step`), which calls the derivative function four times per step and combines them with the usual `1/6 (k1 + 2k2 + 2k3 + k4)` weighting.
-
 **Drift correction**: because of accumulated floating-point error, the RK4 state alone will slowly stretch the rods and pick up small velocity components along their length. After every step, `apply_drift_correction` renormalizes both rods back to their nominal lengths and projects out the velocity component along each rod, so the constraints stay (numerically) exactly satisfied.
 
 **Energy diagnostic**: total mechanical energy (`energy()` = kinetic + potential) is logged once a second as a sanity check — in a correct integrator this should stay roughly flat; steady drift would mean the integrator/correction step is adding real error on top of the system's inherent chaos.
 
 ## Why the trail draws a heart
 
-The double pendulum is chaotic — almost any initial condition quickly turns into an unpredictable tangle. But for one specific pair of starting angles (`theta1 = 2.4912903`, `theta2 = -2.743706`, both measured from straight-down), the early part of the trajectory happens to sweep bob C's path into a heart-like curve before the motion diverges into its usual chaos. Those angles are hardcoded as `THETA1`/`THETA2` in both `src/main.rs` and `src/bin/record.rs`. `media/heart_1727.png` is frame 1727 of a recording (≈28.8s in, at 60fps) — the point where the heart shape is most fully traced out.
+The double pendulum is chaotic for almost any initial condition, but the specific starting angles used here, `theta1 = 2.4912903` and `theta2 = -2.743706` (measured from straight-down, hardcoded as `THETA1`/`THETA2` in both `src/main.rs` and `src/bin/record.rs`), were taken from a YouTube video that found this pair traces a heart shape. That's the whole explanation — they weren't derived or searched for in this repo.
 
 ## Binaries
 
@@ -56,4 +50,4 @@ The double pendulum is chaotic — almost any initial condition quickly turns in
 
 ## Recording
 
-🔗 _Google Drive link to a rendered recording: TODO_
+🔗 [Google Drive link to a rendered recording](https://drive.google.com/file/d/1UsX_TiwrU99msLE9LTRpoJHin-S8GDH2/view?usp=share_link)
