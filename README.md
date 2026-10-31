@@ -32,6 +32,8 @@ This is solved fresh on every derivative evaluation — the multipliers are neve
 
 The double pendulum is chaotic for almost any initial condition, but the specific starting angles used here, `theta1 = 2.4912903` and `theta2 = -2.743706` (measured from straight-down, hardcoded as `THETA1`/`THETA2` in both `src/main.rs` and `src/bin/record.rs`), were taken from a YouTube video that found this pair traces a heart shape. That's the whole explanation — they weren't derived or searched for in this repo.
 
+![Heart traced by the pendulum's trail](media/heart.png)
+
 ## Binaries
 
 - **`pendulum3d`** (`src/main.rs`) — interactive 3D viewer. Orbit the camera with the mouse (via `bevy_panorbit_camera`), watch the pendulum swing from the fixed initial angles, and see the swept trail and energy-drift log in the console.
